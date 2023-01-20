@@ -34,13 +34,13 @@ class DatabaseConnection:
         try:
             # TODO (5.3.2)  
             # insert sql query
-
+            sql = "INSERT INTO {} ({}, {});".format(TABLE_NAME, bitcoin.timestamp, bitcoin.price)
             # execute sql query
-
+            cursor.execute(sql)
             # commit to db
-
+            self.__db.commit()
             # close
-
+            cursor.close()
             return True
         except Exception as e:
             print(e)
@@ -60,20 +60,21 @@ class DatabaseConnection:
             
             # TODO (5.3.1)
             # get cursor
-            
+            cursor = self.__db.cursor()
             
             # insert sql query
-             
+            sql = "SELECT * from {}".format(TABLE_NAME)
 
             # execute sql query
-           
+            cursor.execute(sql)
 
             # fetch all results obtained
-            
+            results = cursor.fetchall()
             # close
-
+            cursor.close()
             # convert results to BitcoinTimestamp objects and append to output
-
+            for result in results:
+                output.append(BitcoinTimestamp(result[0], result[1]))
             return output
         except Error as e:
             print(e)

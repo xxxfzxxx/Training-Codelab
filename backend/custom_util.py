@@ -14,8 +14,16 @@ def get_live_bitcoin_price():
     :rtype:
         float
     """
-    pass
-
+    try:
+        response = requests.get(BITCOIN_CURRENT_PRICE_URL)
+        if response.status_code == 200:
+            data = response.text()
+            price = data['bpi']['USD']['rate'].replace(',', '')
+            return float(price)
+        else:
+            return -1
+    except:
+        return -1
 def create_database():
     """
     creates a bitcoin database with a table of timestamp (TEXT) and price (REAL/float) fields
@@ -77,3 +85,4 @@ def convert_date_to_text(date: datetime):
 
 if __name__ == '__main__':
     create_database()
+    print(get_live_bitcoin_price())
