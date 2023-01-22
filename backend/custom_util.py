@@ -14,15 +14,12 @@ def get_live_bitcoin_price():
     :rtype:
         float
     """
-    try:
-        response = requests.get(BITCOIN_CURRENT_PRICE_URL)
-        if response.status_code == 200:
-            data = response.text()
-            price = data['bpi']['USD']['rate'].replace(',', '')
-            return float(price)
-        else:
-            return -1
-    except:
+    response = requests.get(BITCOIN_CURRENT_PRICE_URL)
+    if response.status_code == 200:
+        data = response.json()
+        price = data['bpi']['USD']['rate'].replace(',', '')
+        return float(price)
+    else:
         return -1
 def create_database():
     """

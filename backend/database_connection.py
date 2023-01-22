@@ -34,9 +34,11 @@ class DatabaseConnection:
         try:
             # TODO (5.3.2)  
             # insert sql query
-            sql = "INSERT INTO {} ({}, {});".format(TABLE_NAME, bitcoin.timestamp, bitcoin.price)
-            # execute sql query
-            cursor.execute(sql)
+            print(bitcoin.timestamp)
+            # execute sql querys
+            cursor.execute(
+                "INSERT INTO Bitcoin (timestamp, price) VALUES (?, ?);", 
+                (bitcoin.timestamp, bitcoin.price),)
             # commit to db
             self.__db.commit()
             # close
@@ -74,6 +76,7 @@ class DatabaseConnection:
             cursor.close()
             # convert results to BitcoinTimestamp objects and append to output
             for result in results:
+                print(result[0], result[1])
                 output.append(BitcoinTimestamp(result[0], result[1]))
             return output
         except Error as e:
