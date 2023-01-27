@@ -2,12 +2,15 @@
 }
 
 .priceContainerUp {
+    color: greenyellow
 }
 
 .priceContainerDown {
+    color: red;
 }
 
 .priceContainerEqual {
+    color: gray;
 }
 
 .timeContainer {
